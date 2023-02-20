@@ -65,31 +65,34 @@
         // }
 
         window.addEventListener('beforeinstallprompt', (event) => {
-            // 防止預設的安裝提示框彈出
+            // prevent default install hint 防止預設的安裝提示框彈出
             event.preventDefault();
 
-            // 儲存事件
-            const deferredPrompt = event;
+            // Save event 儲存事件
+            window.deferredPrompt = event;
 
-            // 在需要安裝時顯示自己的 UI
+            // You can't show your own UI when its needed 在需要安裝時顯示自己的 UI
             // installButton.style.display = 'block';
+        });
 
-            // 監聽安裝按鈕的點擊事件
-            document.getElementById("app").addEventListener('click', () => {
-                // 觸發安裝事件
-                deferredPrompt.prompt();
+        // add an event to listen to click() 監聽安裝按鈕的點擊事件
+        document.getElementById("app").addEventListener('click', () => {
+            const deferredPrompt = window.deferredPrompt;
+            if(!deferredPrompt){
+                return;
+            }
+            // Trigger install event(Only once) 觸發安裝事件(只會觸發一次)
+            deferredPrompt.prompt();
 
-                // 等待用戶作出安裝選擇
-                deferredPrompt.userChoice.then((choiceResult) => {
-                    if (choiceResult.outcome === 'accepted') {
-                        console.log('使用者已安裝了 PWA');
-                    } else {
-                        console.log('使用者未安裝 PWA');
-                    }
-
-                    // 清除儲存的事件
-                    deferredPrompt = null;
-                });
+            // Wait for the client 等待用戶作出安裝選擇
+            deferredPrompt.userChoice.then((choiceResult) => {
+                if (choiceResult.outcome === 'accepted') {
+                    console.log('PWA already installed!');
+                } else {
+                    console.log('PWA not installed!');
+                }
+                // We've used the prompt, and can't use it again, throw it away
+                window.deferredPrompt = null;
             });
         });
 
