@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="icon" href="/prj/favicon.ico" type="image/x-icon" />
+        <link rel="manifest" href="/prj/manifest.json">
+
+
+        <title>ZaWaRuDo</title>
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="/prj/assets/fonts.css">
+        <!-- <link href="https://fonts.googleapis.com/css?family=Raleway:100,600" rel="stylesheet" type="text/css"> -->
+
+        <!-- Styles -->
+        <link rel="stylesheet" href="/prj/assets/style.css">
+        <!-- <style></style> -->
+    </head>
+    <body>
+        <div id="app" class="flex-center position-ref full-height">
+            <div class="content">
+                <div class="title m-b-md">
+                    ZaWaRuDo
+                </div>
+            </div>
+        </div>
+    </body>
+    <script>
+        // ================ Regist the Service Worker(PWA) ==================
+        // console.log('Regist the Service Worker(PWA)');
+        // Example 1
+        window.addEventListener('load', () => {
+            // console.log('PWA');
+            registerSW();
+        });
+
+        // Regist the Service Worker
+        async function registerSW() {
+            if ('serviceWorker' in navigator) {
+                // console.log('PWA');
+                try {
+                    await navigator.serviceWorker.register('/prj/sw.js');
+                    // navigator.serviceWorker.register('/prj/sw.js');
+                    console.log('ServiceWorker registration successful');
+                }
+                catch (e) {
+                    console.log('ServiceWorker registration failed');
+                }
+            }
+        }
+
+        // Example 2
+        // if ('serviceWorker' in navigator) {
+        //     console.log('PWA');
+        //     window.addEventListener('load', function() {
+        //         navigator.serviceWorker.register('/prj/sw.js').then(function(registration) {
+        //             console.log('ServiceWorker registration successful with scope: ', registration.scope);
+        //         }, function(err) {
+        //             console.log('ServiceWorker registration failed: ', err);
+        //         });
+        //     });
+        //     // console.log('PWA END');
+        // }
+
+        window.addEventListener('beforeinstallprompt', (event) => {
+            // 防止預設的安裝提示框彈出
+            event.preventDefault();
+
+            // 儲存事件
+            const deferredPrompt = event;
+
+            // 在需要安裝時顯示自己的 UI
+            // installButton.style.display = 'block';
+
+            // 監聽安裝按鈕的點擊事件
+            document.getElementById("app").addEventListener('click', () => {
+                // 觸發安裝事件
+                deferredPrompt.prompt();
+
+                // 等待用戶作出安裝選擇
+                deferredPrompt.userChoice.then((choiceResult) => {
+                    if (choiceResult.outcome === 'accepted') {
+                        console.log('使用者已安裝了 PWA');
+                    } else {
+                        console.log('使用者未安裝 PWA');
+                    }
+
+                    // 清除儲存的事件
+                    deferredPrompt = null;
+                });
+            });
+        });
+
+    </script>
+</html>

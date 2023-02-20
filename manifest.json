@@ -1,0 +1,36 @@
+{
+    "name": "ZaWaRuDo-PWA",
+    "short_name": "ZaWaRuDo-PWA",
+    "icons": [
+        {
+            "src": "https://tw-john-wu-2023-02-02a.on.drv.tw/prj/img/icon-144.png",
+            "sizes": "144x144",
+            "type": "image/png"
+        },
+        {
+            "src": "https://tw-john-wu-2023-02-02a.on.drv.tw/prj/img/icon-192.png",
+            "sizes": "192x192",
+            "type": "image/png",
+            "purpose": "any"
+        },
+        {
+            "src": "https://tw-john-wu-2023-02-02a.on.drv.tw/prj/img/icon-512.png",
+            "sizes": "512x512",
+            "type": "image/png",
+            "purpose": "maskable"
+        },
+        {
+            "src": "https://tw-john-wu-2023-02-02a.on.drv.tw/prj/img/icon-1024.png",
+            "sizes": "1024x1024",
+            "type": "image/png"
+        }
+    ],
+    "id": "/prj",
+    "start_url": "https://tw-john-wu-2023-02-02a.on.drv.tw/prj/index.html",
+    "display": "standalone",
+    "background_color": "#636b6f",
+    "theme_color": "#636b6f",
+    "dir": "auto",
+    "lang": "en"
+}
+  
